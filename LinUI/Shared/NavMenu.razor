@@ -1,0 +1,18 @@
+﻿@inject NavigationManager nav
+<div id="NavMenu">
+    <div class="menu">
+        <div class="top-menu">基础组件</div>
+        <div class="children-menu" @onclick="@(_=>nav.NavigateTo("/Icon"))">Icon图标</div>
+        <div class="children-menu" @onclick="@(_=>nav.NavigateTo("/Buttons"))">Button按钮</div>
+        <div class="children-menu" @onclick="@(_=>nav.NavigateTo("/Loadings"))">Loading加载中状态</div>
+        <div class="children-menu" @onclick="@(_=>nav.NavigateTo("/Tags"))">Tag标签</div>
+        <div class="children-menu" @onclick="@(_=>nav.NavigateTo("/Prograsses"))">Prograss进度条</div>
+        <div class="children-menu" @onclick="@(_=>nav.NavigateTo("/Cards"))">Card卡片</div>
+        <div class="children-menu" @onclick="@(_=>nav.NavigateTo("/Modals"))">Modal弹出框</div>
+        <div class="children-menu" @onclick="@(_=>nav.NavigateTo("/Form"))">表单</div>
+    </div>
+</div>
+
+@code {
+    
+}

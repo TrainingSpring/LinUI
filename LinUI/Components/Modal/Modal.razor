@@ -1,0 +1,88 @@
+﻿@using LinUI.Data
+@namespace LinUI.Components
+<div class="T-Modal-Mask" style="display: @(Show ? "flex" : "none");" @onclick="Close">
+    
+    @* 阻止事件冒泡 *@
+    <div class="t-modal" @style="@Style" @onclick:stopPropagation>
+        <div class="t-title">
+            @if (ModalHeader == null)
+            {
+                <div style="width:calc(100% - .24rem)">@Title</div>
+            }
+            else
+            {
+                @ModalHeader
+            }
+            @if (ShowClose)
+            {
+                <span class="t-close" @onclick="@(Close)"><Icon Style="font-size: .14rem" Name="close"/></span>
+            }
+        </div>
+        <div class="t-body">
+            @ChildContent
+        </div>
+        <div class="t-footer">
+            @ModalFooter
+            <div class="t-button-box">
+                @if (ShowCancel)
+                {
+                    <Button Size="LinSize.Default" Type="ButtonType.White" OnClick="Close">取消</Button>
+                }
+                @if (ShowConfirm)
+                {
+                    <Button Size="LinSize.Default" Type="ButtonType.Blue" OnClick="OnConfirm">确定</Button>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+@code {
+
+    [Parameter]
+    public bool Show { set; get; } = true;
+    [Parameter]
+    public EventCallback<bool> ShowChanged { set; get; }
+    // style 
+    [Parameter]
+    public string Style { set; get; } 
+    // 底部确认按钮是否显示
+    [Parameter]
+    public bool ShowConfirm { set; get; } = true;
+    // 底部取消按钮是否显示
+    [Parameter] public bool ShowCancel { set; get; } = true;
+    // 模态框标题
+    [Parameter]
+    public string Title { set; get; } = "title";
+    // 模态框关闭按钮是否显示
+    [Parameter]
+    public bool ShowClose { set; get; } = true;
+    // 模态框头部
+    [Parameter] public RenderFragment? ModalHeader { get; set; }
+    // 模态框主体
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    // 模态框底部
+    [Parameter] public RenderFragment? ModalFooter { get; set; }
+    // 当模态框关闭后触发事件
+    [Parameter]
+    public EventCallback OnClosed { set; get; }
+
+    void StopPropagation()
+    {
+        
+    }
+
+    // 确定按钮点击事件
+    [Parameter] public EventCallback OnCancel { set; get; }
+    // 取消按钮点击事件
+    [Parameter] public EventCallback OnConfirm { set; get; }
+    
+    private async Task  Close()
+    {
+        // Show = false;   此方法无效
+        Console.WriteLine(Show);
+        await OnClosed.InvokeAsync();
+        await ShowChanged.InvokeAsync(false);  // 组件内调用数据更改
+        
+    }
+}

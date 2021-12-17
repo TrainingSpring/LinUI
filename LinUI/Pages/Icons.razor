@@ -1,0 +1,39 @@
+﻿@page "/Icon"
+@using System.Text.Json.Nodes
+@using System.Text.Json
+<div id="Icon" class="content">
+  <ul class="icon_lists dib-box" @ref="IconList">
+    @if (IconAll != null)
+    {
+      @foreach (var item in IconAll)
+      {
+        var name_class = item["font_class"].ToString();
+        var name = item["name"].ToString();
+        <li class="dib">
+          <Icon Name="@name_class" Size="60"></Icon>
+          <div class="name">
+            @name
+          </div>
+          <div class="code-name">@name_class
+          </div>
+        </li>
+      }
+    }
+
+  </ul>
+</div>
+
+@code {
+  ElementReference IconList { set; get; }
+  JsonArray IconAll { set; get; } = new JsonArray();
+  protected override async Task OnInitializedAsync()
+  {
+    IconAll = await JS.InvokeAsync<JsonArray>("getAllIconInfo");
+  }
+
+  protected  override async Task OnAfterRenderAsync(bool firstRender)
+  {
+      await JS.InvokeVoidAsync("iconHandle",IconList);
+    
+  }
+} 

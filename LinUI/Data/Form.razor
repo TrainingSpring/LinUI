@@ -1,0 +1,15 @@
+@page "/Form"
+<div>
+    <Card Title="Input" Arrow="false">
+        <Input @bind-Value="Value" OnChange="InputChange">
+    </Card>
+</div>
+
+@code {
+    public string Value { get; set; }
+
+    public void InputChange(ChangeEventArgs e)
+    {
+        
+    }
+}

@@ -1,0 +1,25 @@
+[
+  {
+    "outputFileName": "wwwroot/css/LinUI/LinUI.bundle.min.css",
+    "inputFiles": [
+      "wwwroot/css/LinUI.css",
+      "wwwroot/css/iconfont.css",
+      "Components/**/*.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/LinUI/LinUI.bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/LinUI.js",
+      "Components/**/*.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  }
+]

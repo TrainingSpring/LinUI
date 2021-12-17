@@ -1,0 +1,21 @@
+#Icon{
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+}
+#Icon .icon_lists{
+    display: grid;
+    grid-template-columns: repeat(10,auto);
+    list-style-type: none;
+    text-align: center;
+    color: #999;
+}
+#Icon .icon_lists .dib{
+    margin: 10px;
+    cursor: pointer;
+}
+#Icon .icon {
+    font-size: 5em;
+    fill: currentColor;
+    overflow: hidden;
+}

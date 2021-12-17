@@ -1,0 +1,32 @@
+﻿@*
+*通用cell组件
+*@
+@namespace LinUI.Components
+<div id="T-Cell" style="display: flex;justify-content: space-between;padding: 10px;align-items: center;border-bottom: 1px solid #eee;background-color: white;@Style" @onclick="Onclick">
+    <div class="t-title">@Title@TitleTag</div>
+    <div class="t-content" style="flex: 1;margin-left: 8px;text-align: right;">@ChildContent</div>
+    <div class="t-right">
+        @if (RightArrow)
+        {
+            <Icon Name="right" Style="margin-left: 8px;"/>
+        }
+    </div>
+</div>
+
+@code {
+    // 左侧标题
+    [Parameter]
+    public string? Title { set; get; }
+    // 右侧箭头是否显示
+    [Parameter]
+    public bool RightArrow { set; get; } = true;
+    // 自定义title
+    [Parameter] public RenderFragment? TitleTag { set; get; }
+    // 中间内容
+    [Parameter] public RenderFragment? ChildContent { set; get; }
+    // style
+    [Parameter] public string? Style { set; get; }
+    // 点击事件 
+    [Parameter] public EventCallback Onclick { set; get; }
+
+}

@@ -1,0 +1,25 @@
+{
+  "name": "gzblogs",
+  "version": "1.0.0",
+  "description": "An ASP.NET Core application for getting started with Less",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "keywords": [
+    "aspnetcore",
+    "less"
+  ],
+  "author": "anuraj",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "4.0.0",
+    "gulp-clean-css": "3.9.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-less": "3.3.2"
+  },
+  "dependencies": {
+    "gulp-minify": "^3.1.0"
+  }
+}

@@ -1,0 +1,8 @@
+﻿@page "/Modals"
+<div id="Modals">
+    <Button Type="ButtonType.Blue" OnClick="() => ShowModal = true">弹出Modal</Button>
+</div>
+<Modal @bind-Show="ShowModal" Title="标题" >模态框内容</Modal>
+@code {
+    bool ShowModal { set; get; } = false;
+}

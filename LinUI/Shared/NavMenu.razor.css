@@ -1,0 +1,9 @@
+#NavMenu .top-menu {
+  font-size: 16px;
+  padding: 20px;
+  border-bottom: 1px solid white;
+}
+#NavMenu .children-menu {
+  background-color: #1cbbb4;
+  padding: 10px 0 10px 40px;
+}

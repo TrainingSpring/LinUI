@@ -1,0 +1,23 @@
+@using LinUI.Tools
+@namespace LinUI.Components
+<input value="@Value" onchange="InputChange" type="@Type.GetDescriptionToString()" placeholder="@Placeholder" >
+
+@code {
+
+    [Parameter]
+    public InputType Type { get; set; } = InputType.Text;
+    [Parameter]
+    public string? Placeholder { get; set; }
+    [Parameter]
+    public string Value { get; set; }
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+    void InputChange(ChangeEventArgs e)
+    {
+        Console.WriteLine(e.Value);
+        OnChange.InvokeAsync(e);
+        ValueChanged.InvokeAsync(e.Value.ToString());
+    }
+}
