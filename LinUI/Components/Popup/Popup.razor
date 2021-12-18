@@ -1,0 +1,46 @@
+@namespace LinUI.Components
+<div class="T-Popup">
+    <div class="t-popup-content">
+        @if (Head != null)
+        {
+            @Head
+        }
+        else
+        {
+            <div class="t-popup-head">
+                <div class="t-popup-title">@Title</div>
+                <div class="t-popup-close"><Icon Name="close"></Icon></div>
+            </div>
+        }
+        <div class="t-popup-body">@ChildContent</div>
+        @if (Foot != null)
+        {
+           @Foot
+        }
+        else
+        {
+           <div class="t-popup-foot"></div>
+        }
+    </div>
+</div>
+
+@code {
+    // 显示Popup
+    [Parameter]
+    public bool Show { get; set; } = false;
+    // 点击蒙版关闭popup
+    [Parameter]
+    public bool MaskClose { get; set; } = true;
+    // 标题
+    [Parameter]
+    public string? Title { get; set; }
+    // 自定义头部
+    [Parameter]
+    public RenderFragment? Head { get; set; }
+    // 自定义脚
+    [Parameter]
+    public RenderFragment? Foot { get; set; }
+    // 内容
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
