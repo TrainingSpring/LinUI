@@ -10,6 +10,8 @@
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +19,16 @@
     <_ContentIncludedByDefault Remove="wwwroot\font\iconfont.ttf" />
     <_ContentIncludedByDefault Remove="wwwroot\font\iconfont.woff" />
     <_ContentIncludedByDefault Remove="wwwroot\font\iconfont.woff2" />
+    <_ContentIncludedByDefault Remove="Components\Button\Button.razor" />
+    <_ContentIncludedByDefault Remove="Components\Card\Card.razor" />
+    <_ContentIncludedByDefault Remove="Components\Cell\Cell.razor" />
+    <_ContentIncludedByDefault Remove="Components\Icon\Icon.razor" />
+    <_ContentIncludedByDefault Remove="Components\Input\Input.razor" />
+    <_ContentIncludedByDefault Remove="Components\Loading\Loading.razor" />
+    <_ContentIncludedByDefault Remove="Components\Modal\Modal.razor" />
+    <_ContentIncludedByDefault Remove="Components\Progress\Progress.razor" />
+    <_ContentIncludedByDefault Remove="Components\Switch\Switch.razor" />
+    <_ContentIncludedByDefault Remove="Components\Tag\Tag.razor" />
   </ItemGroup>
   
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

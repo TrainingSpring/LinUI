@@ -1,0 +1,4 @@
+# Project exclude paths
+/LinUI/node_modules/
+/LinUI/obj
+/LinUI/bin

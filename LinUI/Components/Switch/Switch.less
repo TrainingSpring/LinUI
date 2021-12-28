@@ -1,0 +1,28 @@
+.T-Switch{
+  height: 26px;
+  width: 52px;
+  border-radius: 13px;
+  position:relative;
+  display: inline-block;
+  text-align: center;
+  line-height: 26px;
+  
+  color: white;
+  .t-switch-icon{
+    position: absolute;
+    height: 100%;
+    width: 65%;
+    float: left;
+    transition: 200ms all linear;
+    transition-delay: 200ms;
+  }
+  .t-switch-icon-off{
+    right: 0;
+  }
+  .t-switch-icon-on{
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transform: scale(0);
+  }
+}

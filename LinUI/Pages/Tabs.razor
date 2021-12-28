@@ -1,6 +1,43 @@
-@page "/Tab"
-<div id="Tabs">Tab</div>
+@page "/Tabs"
+<div id="Tabs">
+    <Tab Data="_tabData" @bind-Current="Current"></Tab>
+</div>
 
 @code {
-    
+    int Current { set; get; } = 0;
+    List<TabData> _tabData = new List<TabData>()
+    {
+        new TabData()
+        {
+            Name = "tab0"
+        },
+        new TabData()
+        {
+            Name = "tab1"
+        },
+        new TabData()
+        {
+            Name = "tab2" 
+        },
+        new TabData()
+        {
+            Name = "tab3"
+        },
+        new TabData()
+        {
+            Name = "tab4"
+        },
+        new TabData()
+        {
+            Name = "tab5"
+        },
+        new TabData()
+        {
+            Name = "tab6"
+        },
+        new TabData()
+        {
+            Name = "tab7"
+        },
+    };
 }

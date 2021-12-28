@@ -1,10 +1,13 @@
 ﻿@page "/Buttons"
 @using Data
 <div style="padding: 10px">
-    <Button Size="LinSize.Small" Shape="LinShape.Circle" Type="@ButtonType.Purple" Block>按钮2</Button>
-    <Button Size="LinSize.Small" Shape="LinShape.Circle" Type="@ButtonType.Blue" IconName="rocket">按钮3</Button>
-    <Button Size="LinSize.Default" Shape="LinShape.Circle" Type="@ButtonType.Cyan" Ghost>按钮</Button>
-    <Button Size="LinSize.Default" Shape="LinShape.Circle" Type="@ButtonType.Cyan" ShowLoading >加载状态</Button> 
+    <Button Size="LinSize.Small" Shape="LinShape.Circle" Color="@ButtonColor.Purple" Block>按钮2</Button>
+    <Button Size="LinSize.Small" Shape="LinShape.Circle" Color="@ButtonColor.Blue" IconName="rocket">按钮3</Button>
+    <Button Size="LinSize.Default" Shape="LinShape.Circle" Color="@ButtonColor.Cyan" Ghost>按钮</Button>
+    <Button Size="LinSize.Default" Shape="LinShape.Circle" Color="@ButtonColor.Cyan" ShowLoading >加载状态</Button> 
+    <Button Size="LinSize.Default" Shape="LinShape.Circle" Type="ButtonType.Upload" Color="@ButtonColor.Cyan" >上传文件</Button> 
+    <Button Size="LinSize.Default" Shape="LinShape.Circle" Type="ButtonType.Camara" Color="@ButtonColor.Cyan" Url="https://localhost:7117/api/UploadExcel">调用摄像头</Button> 
+    <div onclick="location.reload();">刷新</div>
 </div>
  
 @code {

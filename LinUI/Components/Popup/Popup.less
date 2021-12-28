@@ -1,0 +1,31 @@
+.T-Popup{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  z-index:999;
+  left: 0;
+  top: 0;
+  transition: 200ms all linear;
+  background-color: rgba(0,0,0,0.7);
+  .t-popup-content{
+    transition: 200ms all linear;
+    background-color: white;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    .t-popup-head{
+      display: flex;
+      padding: 10px 5px;
+      border-bottom: 1px solid #eeeeee;
+      .t-popup-title{
+        flex: 1;
+        text-align: center;
+      }
+      .t-popup-close{
+        margin:0 10px;
+      }
+    }
+  }
+}

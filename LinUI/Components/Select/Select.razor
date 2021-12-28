@@ -1,0 +1,72 @@
+@namespace LinUI.Components
+@using Newtonsoft.Json
+@inject IJSRuntime _js
+<div class="T-Select" id="@SelectId">
+    @ChildContent
+</div>
+ 
+@code {
+    bool IsRenderSelect { set; get; } = false;
+    [Parameter]
+    // 选中的数据
+    public List<SelectData> Value { get; set; }
+    [Parameter]
+    public EventCallback<List<SelectData>> ValueChanged { get; set; }
+    [Parameter]
+    public int[]? Position { set; get; } 
+    // 一个唯一id
+    string SelectId { get; } = "T-Select-" + Guid.NewGuid().ToString();
+    // child content
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    // 数据
+    [Parameter]
+    public List<object> Data { get; set; } = new List<object>();
+    // 连接符
+    [Parameter]
+    public string? Connector { set; get; }
+    // 标题
+    [Parameter]
+    public string? Title { set; get; }
+    // 当被选中
+    [Parameter]
+    public EventCallback<List<SelectData>> OnSelected { get; set; }
+    // 当滑动结束
+    [Parameter]
+    public EventCallback<List<SelectData>> OnSlipEnd { get; set; }
+    [JSInvokable]
+    public void Selected(int[] indexArr,object data)
+    {
+        var res = JsonConvert.DeserializeObject<List<SelectData>>(data.ToString());
+        ValueChanged.InvokeAsync(res);
+        OnSelected.InvokeAsync(res);
+    }
+    // 每一次手势滑动结束后触发的回调函数
+    [JSInvokable]
+    public void SelectChange(int[] indexArr,object data)
+    {
+        var res = JsonConvert.DeserializeObject<List<SelectData>>(data.ToString());
+        OnSlipEnd.InvokeAsync(res);
+    }
+
+    protected override bool ShouldRender()
+    {
+        if (!IsRenderSelect)
+        {
+            return true;
+        }
+        else return false;
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var dotNetObj = DotNetObjectReference.Create(this);
+            await _js.InvokeVoidAsync("initSelect", dotNetObj,SelectId,Title,Data,Connector,Position);
+        }
+       
+    }
+
+}

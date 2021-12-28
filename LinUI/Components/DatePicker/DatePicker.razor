@@ -1,0 +1,46 @@
+@namespace LinUI.Components
+@*
+*通用时间组件(基于系统时间选择组件)
+*@
+@using Data
+@using LinUI.Tools
+<div class="DataPicker" style="position: relative;height: 32px;line-height: 32px;@Style ">
+    <label>
+        <span style="position: absolute;left: 0;top: 0;width:100%;z-index: 9;">
+            @if (string.IsNullOrEmpty(Value))
+            {
+                <span style="color: #ccc;font-size: 12px">@Placeholder</span>
+            }
+            else
+            {
+                @Value
+            }
+        </span>
+        <input type="@Type.GetDescriptionToString()"  style="opacity:0;width: 30px;height:0;display: inline-block;position: relative;z-index:9;" @onchange="OnDateChange" />
+    </label>
+</div>
+
+@code {
+
+    [Parameter]
+    public DatePickerType Type { set; get; } = DatePickerType.Date;
+    DateTime Now { set; get; } = DateTime.Now;
+    [Parameter]
+    public string? Style { get; set; }
+    // format 格式
+    [Parameter] public string Format { set; get; } = "yyyy-MM-dd"; 
+    // 格式化后的string日期
+    [Parameter] public string Value { set; get; }
+    // 默认占位字符
+    [Parameter] public string? Placeholder { set; get; }
+    // 数据绑定相关
+    [Parameter] public EventCallback<string?> ValueChanged { set; get; }
+    [Parameter] public EventCallback OnChange { set; get; }
+
+    private async Task  OnDateChange(ChangeEventArgs e)
+    {
+        DateTime date = DateTime.Parse(e.Value.ToString());
+        await ValueChanged.InvokeAsync(date.ToString(Format));
+        await OnChange.InvokeAsync();
+    }
+}

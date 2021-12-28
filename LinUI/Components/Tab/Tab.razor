@@ -1,0 +1,41 @@
+@using LinUI.Data
+@namespace LinUI.Components
+@inject IJSRuntime _js
+<div class="T-Tab" @ref="TabRef" style="background-color: @Color[0];">
+    <div class="t-tab-box">
+        @for(int i = 0;i<Data.Count();i++)
+        {
+            var item = Data[i];
+            int index = i;
+            <div class="t-tab-item" @onclick="() => TabCLick(index)" style="color:@(index==Current?ActionColor[0]:Color[1]);">
+                <div class="t-tab-name">@item.Name</div>
+                <div class="t-tab-line" style="background-color: @ActionColor[0];opacity: @(Current==index?1:0)"></div>
+            </div>
+        }
+    </div>
+</div>
+@code {
+    ElementReference TabRef { set; get; }
+    [Parameter]
+    public List<TabData> Data { get; set; }
+    // 当前选中
+    [Parameter]
+    public int Current { get; set; } = 0;
+    [Parameter]
+    public EventCallback<int> CurrentChanged { get; set; }
+    // 默认主题颜色
+    [Parameter]
+    public string[] Color { get; set; } = ColorType.White;
+    // 选中后的颜色
+    [Parameter]
+    public string[] ActionColor { set; get; } = ColorType.Green;
+    // tab点击事件
+    [Parameter]
+    public EventCallback<int> OnClick { get; set; }
+    void TabCLick(int index)
+    {
+        CurrentChanged.InvokeAsync(index);
+        _js.InvokeVoidAsync("tTabClick",TabRef,index);
+        OnClick.InvokeAsync(index);
+    }
+}

@@ -1,0 +1,61 @@
+@using LinUI.Data
+@namespace LinUI.Components
+<div class="T-Nav">
+    <div class="t-nav-fixed" style="background-color:@Color[0];color: @Color[1];@Style">
+        <div class="t-back" >
+            @if (Back == null)
+            {
+                <span class="t-nav-back" @onclick="OnBack" style="display: @(HistoryLen>1?"inline-block":"none")">
+                    <Icon Name="left" Style="margin-right: 10px; "></Icon><span>返回</span>
+                </span>
+            }
+            else
+            {
+                @Back
+            }
+        </div>
+        <div class="t-nav-title">
+            @if (ChildContent != null)
+            {  
+                @ChildContent
+            }
+        </div>
+        <div class="t-right">
+            @if (Right != null)
+            {
+                @Right
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    // 样式
+    [Parameter]
+    public string? Style { get; set; }
+    // 左侧返回
+    [Parameter]
+    public RenderFragment? Back { get; set; }
+    // 右侧
+    [Parameter]
+    public RenderFragment? Right { get; set; }
+    // 标题
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    // 颜色模式
+    [Parameter]
+    public string[]? Color { set; get; } = ColorType.White;
+    // 历史记录
+    int HistoryLen { set; get; }
+    protected override async Task OnInitializedAsync()
+    {
+        HistoryLen = await JS.InvokeAsync<int>("getHistoryLength");
+        Console.WriteLine(HistoryLen);
+    }
+
+    void OnBack()
+    {
+        JS.InvokeVoidAsync("backPage");
+    }
+
+}

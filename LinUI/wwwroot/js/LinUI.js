@@ -9,48 +9,59 @@ function copy(content){
     }
     document.body.removeChild(input);
 }
+// 返回上一个页面
+function backPage() {
+    history.back();
+}
+// 获取历史记录数据量
+function getHistoryLength() {
+    return history.length;
+}
 const names = {
-    total:"T-Total"
+    toast:"T-Toast"
 }
 
 /********************************************************************
  * 轻提醒对象
  * @param options
- * @returns {Total}
+ * @returns {Toast}
  * @constructor
  ********************************************************************/
-function Total(options){
+function Toast(options){
     this.instance = null;
     this.options = {
         delay:3000,
         fontSize:"12px"
     }
-    let total = document.createElement("div");
-    total.id=names.total;
+    let toast = document.createElement("div");
+    toast.id=names.toast;
     this.options = Object.assign({},this.options,options);
-    total.innerHTML = `<span class="t-total-text" style="font-size: ${this.options.fontSize}"></span>`;
-    document.body.append(total)
+    toast.innerHTML = `<span class="t-toast-text" style="font-size: ${this.options.fontSize}"></span>`;
+    document.body.append(toast)
     return this;
 }
 // 显示total
-Total.prototype.show = function(title){
-    let total = document.getElementById(id.total);
-    total.style.display = "block";
-    total.style.opacity = "1";
-    total.querySelector(".t-total-text").innerHTML = title;
+Toast.prototype.show = function(title){
+    let toast = document.getElementById(names.toast);
+    toast.style.display = "block";
+    toast.style.opacity = "1";
+    toast.querySelector(".t-toast-text").innerHTML = title;
     setTimeout(function () {
-        total.style.opacity = "0";
+        toast.style.opacity = "0";
         setTimeout(function () {
-            total.style.display = "none";
+            toast.style.display = "none";
         },200)
     },this.options.delay)
 }
 // 单例模式
-Total.getSingle = function(options){
-    if (this.instance == null)return new Total(options)
+Toast.getSingle = function(options){
+    if (this.instance == null)return new Toast(options)
     else return this.instance;
 }
-
+// 初始化Toast
+function initToast(options) {
+    Toast.getSingle(options);
+}
 /****************************************************************
  * @description 加载插件
  * @param options
@@ -116,4 +127,27 @@ Loading.getLoading = function (options){
         Loading.instance._setOptions(options);
     }
     return Loading.instance;
+}
+
+
+/**
+ * @description 执行组件命令
+ * @param objectName  对象名
+ * @param command  命令
+ * @param arg  参数
+ */
+function handleComponents(objectName , command,arg){
+    let obj;
+    switch (objectName){
+        case "Toast":
+            obj = Toast.getSingle();
+            break;
+        case "Loading":
+            obj = Loading.getLoading();
+            break;
+    }
+    let func = obj[command];
+    if (typeof func === "function")
+        if (arg==null)func();
+        else func(arg);
 }

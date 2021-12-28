@@ -1,13 +1,77 @@
 @page "/Form"
-<div>
+@using LinUI.Data
+<style>
+    #Input .item{
+        border-bottom: 1px solid #eeeeee;;
+    }
+</style>
+<div id="Input">
     <Card Title="Input" Arrow="false">
-        <Input @bind-Value="Value" OnChange="InputChange">
+        <div class="item">
+            <Input @bind-Value="Value" OnChange="InputChange" Label="输入框" LabelStyle="text-align-last: justify;" Placeholder="请输入值" />
+        </div>
+        <div class="item">
+            <Input @bind-Value="Value" OnChange="InputChange" Icon="lock-fill" LabelStyle="text-align-last: justify;" Placeholder="请输入值" />
+        </div>
     </Card>
-</div>
+    <Card Title="Switch开关">
+        <div class="item">
+            <Switch @bind-Value="SwitchValue" Style="margin-right:10px;"></Switch>
+            <Switch @bind-Value="SwitchValue" Color="@DarkColor.Blue" Style="margin-right:10px;"></Switch>
+            <Switch @bind-Value="SwitchValue" Color="@DarkColor.Red" Style="margin-right:10px;"></Switch>
+            <Switch @bind-Value="SwitchValue" Color="@DarkColor.Purple" Style="margin-right:10px;"></Switch>
+        </div>
+    </Card>
+    <Card Title="Select选择器">
+        
+    <Select Data="NameSelect">选择</Select>
+    </Card>
+    <Card Title="多选框">
+        <CheckBox @bind-Value="CheckBoxValue">选框1</CheckBox>
+        <CheckBox @bind-Value="CheckBoxValue" Shape="LinShape.Circle" Color="ColorType.Blue">选框2</CheckBox>
+        <CheckBox @bind-Value="CheckBoxValue" Shape="LinShape.Round" Color="ColorType.Mauve">选框3</CheckBox>
+        <Button Color="@ButtonColor.Brown" OnClick="()=>SelectCheckBoxShow = true">打开多选</Button>
+    </Card>
+    <SelectCheckBox @bind-Show="SelectCheckBoxShow" @bind-Values="PeopleName">
+        
+    </SelectCheckBox>
+</div> 
 
 @code {
+    // 人员姓名选择框
+    List<CheckBoxConfig> PeopleName { set; get; } = new List<CheckBoxConfig>()
+    {
+        new CheckBoxConfig()
+        {
+            Name = "人员1",
+            Value = false
+        },
+        new CheckBoxConfig()
+        {
+            Name = "人员2",
+            Value = false
+        },
+        
+    };
+    bool SelectCheckBoxShow = false;
+    bool CheckBoxValue { set; get; }
     public string Value { get; set; }
-
+    public bool SwitchValue { set; get; }
+    // 任务名称选择框
+    List<object> NameSelect { set; get; } = new List<object>()
+    {
+        new
+        {
+            data = new List<object>()
+            {
+                new
+                {
+                    id = 0,
+                    value = "泡销计划"
+                }
+            }
+        }
+    };
     public void InputChange(ChangeEventArgs e)
     {
         

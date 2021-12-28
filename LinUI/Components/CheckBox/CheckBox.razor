@@ -1,0 +1,47 @@
+﻿@using LinUI.Data
+@using LinUI.Tools
+@namespace LinUI.Components
+<div class="T-CheckBox t-checkbox-@Size.GetDescriptionToString()" @onclick="ChangeCheck" style="@Style">
+    <div class="t-checkbox-box" 
+         style="border:1px solid @(Value?Color[0]:"#eee");
+        background-color: @(Value?Color[0]:Color[1]);
+        border-radius: @(Shape == LinShape.Default?"0":Shape==LinShape.Round?"5px":"50%")">
+        <div class="t-checkbox-selected" 
+             style="display: @(Value?"inline-block":"none");color: @Color[1];">
+            <Icon Name="check" Size="14"></Icon>
+        </div>
+    </div>
+    <div class="t-checkbox-label">@ChildContent</div>
+</div>
+
+@code {
+    // 样式
+    [Parameter]
+    public string? Style { get; set; }
+    // 形状类型
+    [Parameter]
+    public LinShape Shape { set; get; } = LinShape.Default;
+    // 绑定值
+    [Parameter]
+    public bool Value { get; set; } = false;
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+    // 更改事件
+    [Parameter]
+    public EventCallback<bool> OnChange { get; set; }
+    // label内容
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    // 颜色模式
+    [Parameter]
+    public string[] Color { set; get; } = ColorType.Green;
+    // 尺寸
+    [Parameter]
+    public LinSize Size { set; get; } = LinSize.Default;
+    void ChangeCheck()
+    {
+        bool val = !Value;
+        ValueChanged.InvokeAsync(val);
+        OnChange.InvokeAsync(val);
+    }
+}

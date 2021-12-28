@@ -1,0 +1,6 @@
+Tab 切换
+Popup 弹出窗
+Select 下拉框
+Date  日期选择
+CheckBox 多选框
+Map 地图  

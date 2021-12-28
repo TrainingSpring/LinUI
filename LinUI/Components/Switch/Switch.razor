@@ -1,0 +1,69 @@
+@using System.Drawing
+@using LinUI.Data
+@namespace LinUI.Components
+@inject IJSRuntime _js
+<style type="text/css">
+    .T-Switch .t-btn{
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background-color: white;
+        transition: 200ms all linear;
+        border: 1px solid @(Value?Color:DarkColor.Grey);
+        position: absolute;
+        left: 0;
+        top: -1px;
+        transform: translateX(@(Value?"100%":"0"));
+        z-index:100;
+    }
+    .T-Switch .t-switch-icon-on{
+        opacity: @(Value?"1":"0");
+        transform: scale(@(Value?"1":"0"));
+    }
+    .T-Switch .t-switch-icon-off{
+        opacity: @(Value?"0":"1");
+        transform: scale(@(Value?"0":"1"));
+    }
+</style>
+<label>
+    <input @onchange="Change" type="checkbox" style="display: none;">
+    <div class="T-Switch @(string.IsNullOrEmpty(Group)?"":"T-Switch-Group-"+Group)" style="background-color: @(Value?Color:DarkColor.Grey);@Style">
+        <div class="t-switch-icon-on t-switch-icon">
+            <Icon Name="check"></Icon>
+        </div>
+        <div class="t-btn">
+            
+        </div>
+        <div class="t-switch-icon-off t-switch-icon">
+            <Icon Name="close"></Icon>
+        </div>
+    </div>
+</label>
+
+@code {
+    // 开关组
+    [Parameter]
+    public string? Group { get; set; }
+    // 开关颜色
+    [Parameter]
+    public string Color { get; set; } = DarkColor.Green;
+    // 开关状态
+    [Parameter]
+    public bool Value { get; set; } = false;
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+    // 开关状态更改事件
+    [Parameter]
+    public EventCallback<bool> OnChange { set; get; }
+    // 开关样式
+    [Parameter]
+    public string Style { get; set; }
+    // 处理开关
+    void Change(ChangeEventArgs e) 
+    {
+        bool val = (bool)e.Value!;
+        ValueChanged.InvokeAsync(val);
+        _js.InvokeVoidAsync("tSwitchIconAnimation", "T-Switch-Group-"+Group,val);
+        OnChange.InvokeAsync(val);
+    }
+}

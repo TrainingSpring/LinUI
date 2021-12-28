@@ -1,0 +1,81 @@
+﻿@namespace LinUI.Components
+@using Data
+@using LinUI.Tools
+<label for="@Id" style="@LabelStyle">
+    @if (Type == ButtonType.Upload)
+    {
+        <InputFile id="@Id" OnChange="OnUpload" style="display: none;" />   
+    }else if (Type != ButtonType.Default)
+    {
+        <InputFile id="@Id" OnChange="OnUpload" accept="@(Type==ButtonType.Camara?"image/*":Type == ButtonType.Video?"video/*":"audio/*")" style="display: none;" capture="camera" />  
+    }
+    <div disabled="@(Disabled ? "disabled" : null)" class="T-Button @("t-button-shape-" + Shape.GetDescriptionToString()) @("t-button-size-" + Size.GetDescriptionToString())"
+            @onclick="OnClick"
+            style="
+                @(Block ? "display:block;" : "display:inline-block");
+               background-color: @(Ghost ? "transparent" : Color[0]);
+               color: @(Ghost ? Color[0] : Color[1]);
+               border: 1px solid @Color[0];
+               @(ShowLoading ? "filter: opacity(0.6);" : "")
+               @((ButtonColor.White == Color || ButtonColor.Gray == Color) ? $"border:1px solid {Color[1]};color:{Color[1]};" : "")
+             
+   @Style">
+        @if (ShowLoading)
+        {
+            <Loading Style="margin-right: 10px;"></Loading>
+        }
+        @if (!string.IsNullOrEmpty(IconName))
+        {
+            <Icon Name="@IconName" Style="margin-right: 10px;"/>
+        }
+        @ChildContent
+    </div>
+
+
+</label>
+@code {
+    string Id { set; get; } = "T-Button-File-"+Guid.NewGuid().ToString();
+    [Parameter]
+    public string? Url { get; set; }
+    [Parameter]
+    public bool ShowLoading { set; get; } = false;
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    // 按钮类型
+    [Parameter]
+    public ButtonType Type { set; get; } = ButtonType.Default;
+    // 按钮颜色(ButtonColor中的属性)
+    [Parameter]
+    public string[] Color { get; set; } = ButtonColor.Gray;
+    // 幽灵属性 , 按钮背景透明
+    [Parameter]
+    public bool Ghost { get; set; } = false;
+    // 块级按钮
+    [Parameter]
+    public bool Block { get; set; } = false; 
+    // 按钮形状
+    [Parameter]
+    public LinShape Shape { get; set; } = LinShape.Default;
+    // 按钮尺寸
+    [Parameter]
+    public LinSize Size { get; set; } = LinSize.Default;
+    // 其它自定义样式
+    [Parameter]
+    public string? Style { get; set; }
+    // 其它自定义外层label样式
+    [Parameter]
+    public string? LabelStyle { get; set; }
+    // 图标
+    [Parameter]
+    public string? IconName { get; set; }
+    // 禁用状态
+    [Parameter]
+    public bool Disabled { set; get; } = false;
+    // 按钮点击回调
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+    // 上传文件回调
+    [Parameter]
+    public EventCallback<InputFileChangeEventArgs> OnUpload { get; set; }
+
+}

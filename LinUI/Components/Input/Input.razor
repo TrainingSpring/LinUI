@@ -1,0 +1,62 @@
+@using LinUI.Tools
+@namespace LinUI.Components
+<div class="T-Input" style="border:@(Bordered?"1px solid #eee":"none");@Style">
+    @if (!string.IsNullOrEmpty(Icon))
+    {
+        <span class="t-input-icon" style="@IconStyle"><Icon Name="@Icon"></Icon></span>
+    }
+    @if (!string.IsNullOrEmpty(Label))
+    {
+        <span class="t-input-label" style="@LabelStyle">@Label</span>
+    }
+    <input value="@Value" id="@Id" style="@InputStyle" @oninput="InputChange" @onchange="OnChange" type="@Type.GetDescriptionToString()" placeholder="@Placeholder" />
+</div>
+ 
+@code {
+    // 是否有边框
+    [Parameter]
+    public bool Bordered { get; set; } = false;
+    // id
+    [Parameter]
+    public string? Id { set; get; }
+    // 组件Style
+    [Parameter]
+    public string? Style { get; set; }
+    // 输入框Style
+    [Parameter]
+    public string? InputStyle { get; set; }
+    // 图标样式
+    [Parameter]
+    public string? IconStyle { get; set; }
+    // label样式
+    [Parameter]
+    public string? LabelStyle { get; set; }
+    // 图标名
+    [Parameter]
+    public string? Icon { get; set; }
+    // 输入框类型 
+    [Parameter]
+    public InputType Type { get; set; } = InputType.Text;
+    // 占位符
+    [Parameter]
+    public string? Placeholder { get; set; }
+    // 值
+    [Parameter]
+    public string Value { get; set; }
+    // 提示文字
+    [Parameter]
+    public string? Label { get; set; }
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+    // change事件
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+    // input事件
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnInput { get; set; }
+    void InputChange(ChangeEventArgs e)
+    {
+        OnInput.InvokeAsync(e);
+        ValueChanged.InvokeAsync(e.Value.ToString());
+    }
+}
