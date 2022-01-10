@@ -1,6 +1,8 @@
 @namespace LinUI.Components
 @using Newtonsoft.Json
 @inject IJSRuntime _js
+@typeparam TItem
+
 <div class="T-Select" id="@SelectId">
     @ChildContent
 </div>
@@ -9,9 +11,9 @@
     bool IsRenderSelect { set; get; } = false;
     [Parameter]
     // 选中的数据
-    public List<SelectData> Value { get; set; }
+    public List<TItem> Value { get; set; }
     [Parameter]
-    public EventCallback<List<SelectData>> ValueChanged { get; set; }
+    public EventCallback<List<TItem>> ValueChanged { get; set; }
     [Parameter]
     public int[]? Position { set; get; } 
     // 一个唯一id
@@ -21,7 +23,7 @@
     public RenderFragment? ChildContent { get; set; }
     // 数据
     [Parameter]
-    public List<object> Data { get; set; } = new List<object>();
+    public List<SelectStruct<TItem>> Data { get; set; } = new List<SelectStruct<TItem>>();
     // 连接符
     [Parameter]
     public string? Connector { set; get; }
@@ -30,14 +32,14 @@
     public string? Title { set; get; }
     // 当被选中
     [Parameter]
-    public EventCallback<List<SelectData>> OnSelected { get; set; }
+    public EventCallback<List<TItem>> OnSelected { get; set; }
     // 当滑动结束
     [Parameter]
-    public EventCallback<List<SelectData>> OnSlipEnd { get; set; }
+    public EventCallback<List<TItem>> OnSlipEnd { get; set; }
     [JSInvokable]
     public void Selected(int[] indexArr,object data)
     {
-        var res = JsonConvert.DeserializeObject<List<SelectData>>(data.ToString());
+        List<TItem> res = JsonConvert.DeserializeObject<List<TItem>>(data.ToString());
         ValueChanged.InvokeAsync(res);
         OnSelected.InvokeAsync(res);
     }
@@ -45,7 +47,7 @@
     [JSInvokable]
     public void SelectChange(int[] indexArr,object data)
     {
-        var res = JsonConvert.DeserializeObject<List<SelectData>>(data.ToString());
+        List<TItem> res = JsonConvert.DeserializeObject<List<TItem>>(data.ToString());
         OnSlipEnd.InvokeAsync(res);
     }
 
@@ -58,15 +60,19 @@
         else return false;
     }
 
-
+ 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        var data = JsonConvert.SerializeObject(Data);
         if (firstRender)
         {
             var dotNetObj = DotNetObjectReference.Create(this);
-            await _js.InvokeVoidAsync("initSelect", dotNetObj,SelectId,Title,Data,Connector,Position);
+            await _js.InvokeVoidAsync("initSelect", dotNetObj,SelectId,Title,data,Connector,Position);
         }
-       
+        else
+        {
+            await _js.InvokeVoidAsync("updateSelect",SelectId, Title,data);
+        }
     }
 
 }

@@ -2,13 +2,21 @@ using System.Collections.Generic;
 
 namespace LinUI.Components
 {
-    public struct SelectData
+    public class SelectData
     {
-        public string id;
-        public string value;
+        public string id { set; get; }
+        public string value { set; get; }
+        public List<SelectData> childs { set; get; } = new List<SelectData>();
     }
-    public struct SelectStruct
+    public class SelectData<T>
     {
-        public List<SelectData> data;
+        public string id { set; get; }
+        public string value { set; get; }
+        public T? other { set; get; }
+        public List<SelectData<T>> childs { set; get; } = new List<SelectData<T>>();
+    }
+    public class SelectStruct<T>
+    {
+        public List<T> data;
     }
 }

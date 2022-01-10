@@ -1,1 +1,21 @@
-.T-Input{display:flex;align-items:center;color:#333;font-size:12px}.T-Input .t-input-icon{color:#999}.T-Input .t-input-label{display:inline-block;width:70px}.T-Input input{padding:5px 10px;height:20px;line-height:40px;flex:1;border:none;outline:0}
+.T-Input {
+  display: flex;
+  align-items: center;
+  color: #333;
+  font-size: 12px;
+}
+.T-Input .t-input-icon {
+  color: #999999;
+}
+.T-Input .t-input-label {
+  display: inline-block;
+  width: 70px;
+}
+.T-Input input {
+  padding: 5px 10px;
+  height: 30px;
+  line-height: 40px;
+  flex: 1;
+  border: none;
+  outline: none;
+}

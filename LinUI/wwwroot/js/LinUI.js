@@ -28,7 +28,6 @@ const names = {
  * @constructor
  ********************************************************************/
 function Toast(options){
-    this.instance = null;
     this.options = {
         delay:3000,
         fontSize:"12px"
@@ -40,7 +39,8 @@ function Toast(options){
     document.body.append(toast)
     return this;
 }
-// 显示total
+Toast.instance = null;
+// 显示toast
 Toast.prototype.show = function(title){
     let toast = document.getElementById(names.toast);
     toast.style.display = "block";
@@ -48,15 +48,16 @@ Toast.prototype.show = function(title){
     toast.querySelector(".t-toast-text").innerHTML = title;
     setTimeout(function () {
         toast.style.opacity = "0";
-        setTimeout(function () {
-            toast.style.display = "none";
-        },200)
     },this.options.delay)
+    setTimeout(function () {
+        toast.style.display = "none";
+    },this.options.delay+200)
 }
 // 单例模式
 Toast.getSingle = function(options){
-    if (this.instance == null)return new Toast(options)
-    else return this.instance;
+    console.log(Toast.instance == null);
+    if (Toast.instance == null)Toast.instance = new Toast(options);
+    return Toast.instance;
 }
 // 初始化Toast
 function initToast(options) {
@@ -69,15 +70,14 @@ function initToast(options) {
  * @constructor
  ****************************************************************/
 function Loading(options){
-    _options = {
+    this._options = {
         tip:"加载中...",
-        icon:"icon-loading1",
+        icon:"icon-loading-1",
         iconSIze:18,
         bgColor:"rgba(255,255,255,0.8)",
         color:"#333",
         iconColor:"#999"
     };
-    this.instance = null;
     let box = document.querySelectorAll(".t-loading-box");
     if (box.length > 0)return;
     this._options = Object.assign({},this._options,options);
@@ -88,7 +88,7 @@ function Loading(options){
     this.doc.innerHTML = `
             <div class="t-loading-body">
                 <div class="t-loading-icon">
-                    <i class="iconfont ${this._options.icon}" style="color:${this._options.iconColor};font-size: ${this._options.iconSIze}px"></i>
+                    <span class="iconfont ${this._options.icon}" style="color:${this._options.iconColor};font-size: ${this._options.iconSIze}px"></span>
                 </div>
                 <div class="t-loading-tip" style="color: ${this._options.color};">
                     ${this._options.tip}
@@ -98,6 +98,7 @@ function Loading(options){
     document.body.append(this.doc);
     return this;
 }
+Loading.instance = null;
 // 显示
 Loading.prototype.show = function(){
     console.log("showLoading")
@@ -146,6 +147,7 @@ function handleComponents(objectName , command,arg){
             obj = Loading.getLoading();
             break;
     }
+    console.log(obj, command);
     let func = obj[command];
     if (typeof func === "function")
         if (arg==null)func();

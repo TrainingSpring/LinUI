@@ -13,6 +13,9 @@
 </div>
  
 @code {
+    // 是否禁用
+    [Parameter]
+    public bool Disabled { set; get; } = false;
     // 是否有边框
     [Parameter]
     public bool Bordered { get; set; } = false;

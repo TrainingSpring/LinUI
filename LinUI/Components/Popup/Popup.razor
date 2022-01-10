@@ -9,7 +9,7 @@
         {
             <div class="t-popup-head">
                 <div class="t-popup-title">@Title</div>
-                <div class="t-popup-close"><Icon Name="close"></Icon></div>
+                <div class="t-popup-close" @onclick="() => ShowChanged.InvokeAsync(false)"><Icon Name="close"></Icon></div>
             </div>
         }
         <div class="t-popup-body">@ChildContent</div>

@@ -6,7 +6,7 @@
 <Popup Title="标题" @bind-Show="Show">
     内容
 </Popup>
-<Select Data="SelectDatas">
+<Select TItem="SelectData" Data="SelectDatas">
     选择框
 </Select>
 <DatePicker Placeholder="时间选择">
@@ -16,26 +16,21 @@
     bool Show { set; get; } = false;
     bool SelectShow { set; get; } = false;
 
-    List<object> SelectDatas = new List<object>()
+    List<SelectStruct<SelectData>> SelectDatas = new List<SelectStruct<SelectData>>()
     {
-        new
+        new SelectStruct<SelectData>()
         {
-            data = new List<object>()
+            data = new List<SelectData>()
             {
-                new
+                new SelectData()
+                {
+                    id = "0",
+                    value = "设置1"
+                },
+                new SelectData()
                 {
                     id = "1",
-                    value = "1"
-                },
-                new
-                {
-                    id = "2",
-                    value = "2"
-                },
-                new
-                {
-                    id = "3",
-                    value = "3"
+                    value = "设置2"
                 },
             }
         }

@@ -24,7 +24,7 @@
     </Card>
     <Card Title="Select选择器">
         
-    <Select Data="NameSelect">选择</Select>
+    <Select TItem="SelectData<string>" Data="NameSelect">选择</Select>
     </Card>
     <Card Title="多选框">
         <CheckBox @bind-Value="CheckBoxValue">选框1</CheckBox>
@@ -32,9 +32,9 @@
         <CheckBox @bind-Value="CheckBoxValue" Shape="LinShape.Round" Color="ColorType.Mauve">选框3</CheckBox>
         <Button Color="@ButtonColor.Brown" OnClick="()=>SelectCheckBoxShow = true">打开多选</Button>
     </Card>
-    <SelectCheckBox @bind-Show="SelectCheckBoxShow" @bind-Values="PeopleName">
+    @*<SelectCheckBox @bind-Show="SelectCheckBoxShow" @bind-Values="PeopleName">
         
-    </SelectCheckBox>
+    </SelectCheckBox>*@
 </div> 
 
 @code {
@@ -58,17 +58,24 @@
     public string Value { get; set; }
     public bool SwitchValue { set; get; }
     // 任务名称选择框
-    List<object> NameSelect { set; get; } = new List<object>()
+    List<SelectStruct<SelectData<string>>> NameSelect { set; get; } = new List<SelectStruct<SelectData<string>>>()
     {
-        new
+        new SelectStruct<SelectData<string>>()
         {
-            data = new List<object>()
+            data = new List<SelectData<string>>()
             {
-                new
+                new SelectData<string>()
                 {
-                    id = 0,
-                    value = "泡销计划"
-                }
+                    value = "选择项1",
+                    id = "0",
+                    other = "其他"
+                },
+                new SelectData<string>()
+                {
+                    value = "选择项2",
+                    id = "1",
+                    other = "其他2"
+                },
             }
         }
     };

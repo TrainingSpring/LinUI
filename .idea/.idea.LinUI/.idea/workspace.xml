@@ -38,6 +38,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a8f4e63a18974030955d623c4952e1bcf270/1/DotNetObjectReference.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="227YSrhiWqVmbVVOJ91oetvAQMw" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -140,7 +143,8 @@
       <workItem from="1639377100328" duration="62207000" />
       <workItem from="1639704794200" duration="46828000" />
       <workItem from="1640047875415" duration="8763000" />
-      <workItem from="1640059686318" duration="50675000" />
+      <workItem from="1640059686318" duration="63308000" />
+      <workItem from="1640760316133" duration="24041000" />
     </task>
     <task id="LOCAL-00001" summary="新增了一些插件">
       <created>1639821934846</created>

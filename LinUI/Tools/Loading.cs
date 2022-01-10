@@ -94,7 +94,8 @@ namespace LinUI.Tools
         /// <param name="arg"></param>
         public async Task ExecuteCommand(string command,string arg = null)
         {
-            await JS.InvokeVoidAsync("handleComponents",command,arg);
+            Console.WriteLine("command: {0} , Type: Loading , arg: {1}",command,arg);
+            await JS.InvokeVoidAsync("handleComponents","Loading",command,arg);
         }
     }
 }

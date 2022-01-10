@@ -1,0 +1,86 @@
+﻿@using LinUI.Data
+@using System.Drawing
+@namespace LinUI.Components
+@typeparam TItem
+@*
+ * 弹出窗多选
+*@
+<div class="T-SelectCheckbox">
+    <Popup @bind-Show="BoundShow" Title="@Title">
+        <div class="t-select-checkbox-box" style="max-height:@MaxHeight;@Style">
+            @for (int i = 0; i < Values.Count; i++)
+            {
+                var index = i;
+                var item = Values[index];
+                <div class="t-select-check-box" style="@ItemStyle" @onclick="() => { ClickItem(index,item);}"> 
+                    <div class="t-select-check-label">@item.Name</div>
+                    <div class="t-select-check-checkbox">
+                        <CheckBox  @bind-Value="@item.Value" Shape="Shape" Color="Color" Style="@CheckBoxStyle" OnChange="_=>CheckBoxChange(index,_ , item)" Size="Size"></CheckBox>
+                    </div>
+                </div>
+            }
+        </div>
+    </Popup>
+</div>
+
+@code {
+    [Parameter]
+    public string MaxHeight { get; set; } = "320px";
+    [Parameter]
+    public string? Style { get; set; }
+    [Parameter]
+    public string? ItemStyle { get; set; }
+    [Parameter]
+    public string? CheckBoxStyle { get; set; }
+    [Parameter]
+    public bool Show { get; set; }
+    [Parameter]
+    public EventCallback<bool> ShowChanged { get; set; }
+    private bool BoundShow
+    {
+        get => Show ;
+        set => ShowChanged.InvokeAsync(value);
+    }
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public List<CheckBoxConfig<TItem>> Values { set; get; } = new List<CheckBoxConfig<TItem>>();
+    
+    [Parameter]
+    public EventCallback<List<CheckBoxConfig<TItem>>> ValuesChanged { set; get; }
+    
+    [Parameter]
+    public EventCallback<List<CheckBoxConfig<TItem>>> OnChange { set; get; }
+    // 形状类型
+    [Parameter]
+    public LinShape Shape { set; get; } = LinShape.Default;
+    // 尺寸
+    [Parameter]
+    public LinSize Size { set; get; } = LinSize.Default;
+    // 颜色模式
+    [Parameter]
+    public string[] Color { set; get; } = ColorType.Green;
+    
+    void CheckBoxChange(int index , bool val , CheckBoxConfig<TItem> item)
+    {
+        var res = Values;
+        res[index].Value = val;
+        ValuesChanged.InvokeAsync(res);
+        OnChange.InvokeAsync(res);
+    }
+
+    async void  PopupChange(bool val)
+    {
+        Console.WriteLine("popup 显示状态: " + val.ToString());
+        await ShowChanged.InvokeAsync(val);
+        Console.WriteLine("show 状态: " + Show.ToString());
+    }
+
+    void ClickItem(int index,CheckBoxConfig<TItem> item)
+    {
+        var val = Values[index].Value;
+        CheckBoxChange(index,!val,item);
+        StateHasChanged();
+    }
+}

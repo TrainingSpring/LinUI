@@ -7,7 +7,7 @@ let toast = Toast.getSingle({
 });
 function iconHandle(el){
     let item = el.getElementsByClassName("dib");
-    $(item).click(function (e) {
+    $(".dib-box").on('click',".dib",function (e) {
         let codeName = $(".code-name",this).text();
         let name = codeName.replace(".icon-","");
         name = name.replace(/[\s]?/g,"");

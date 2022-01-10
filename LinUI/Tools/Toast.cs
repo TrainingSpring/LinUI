@@ -14,12 +14,18 @@ namespace LinUI.Tools
         /// </summary>
         public string FontSize { set; get; }
     }
-    public class Toast
+
+    public interface IToast
+    {
+        public Task InitToast(ToastOptions options);
+        public Task Show(string title);
+    }
+    public class Toast:IToast
     {
         readonly IJSRuntime JS;
         public ToastOptions Options { set; get; } = new ToastOptions() { Delay = 3000, FontSize = "12px"};
 
-        Toast(IJSRuntime _js)
+        public Toast(IJSRuntime _js)
         {
             JS = _js;
         }
@@ -43,7 +49,7 @@ namespace LinUI.Tools
         /// </summary>
         /// <param name="command"></param>
         /// <param name="arg"></param>
-        public async Task ExecuteCommand(string command,string arg = null)
+        async Task ExecuteCommand(string command,string arg = null)
         {
             await JS.InvokeVoidAsync("handleComponents","Toast",command,arg);
         }
